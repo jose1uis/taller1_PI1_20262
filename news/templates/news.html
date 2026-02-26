@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+{% extends "base.html" %}
 
-{% extends 'base.html' %}
 {% block content %}
 <div class="container mt-4">
 
@@ -13,19 +7,33 @@
 
     {% for item in newss %}
         <div class="card mb-4 shadow-sm">
-            <div class="card-body">
+            <div class="row g-0 align-items-center">
 
-                <h4 class="card-title">{{ item.headline }}</h4>
+                {% if item.image %}
+                <div class="col-md-4">
+                    <img src="{{ item.image.url }}"
+                         class="img-fluid rounded-start"
+                         alt="{{ item.headline }}">
+                </div>
+                {% endif %}
 
-                <p class="card-text">
-                    {{ item.body }}
-                </p>
+                <div class="{% if item.image %}col-md-8{% else %}col-12{% endif %}">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ item.headline }}</h4>
 
-                <p class="card-text">
-                    <small class="text-muted">
-                        {{ item.date }}
-                    </small>
-                </p>
+                        <p class="card-text">
+                            {{ item.body }}
+                        </p>
+
+                        {% if item.date %}
+                        <p class="card-text">
+                            <small class="text-muted">
+                                {{ item.date }}
+                            </small>
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -34,8 +42,4 @@
     {% endfor %}
 
 </div>
-{% endblock content %}
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+{% endblock %}
